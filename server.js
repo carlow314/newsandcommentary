@@ -1,4 +1,5 @@
 //Dependencies
+var mongoose = require("mongoose");
 var express = require("express");
 var bodyParser = require("body-parser");
 var methodOverride = require("method-override");
@@ -31,6 +32,13 @@ app.set("view engine", "handlebars");
 // Routes
 var route = require("./routes/htmlroutes.js")(app);
 
+//Mongoose Connection
+mongoose.connect('mongodb://localhost/test');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('openURI()', function() {
+  // we're connected!
+});
 
   app.listen(PORT, function () {
     console.log("App listening on PORT " + PORT);
